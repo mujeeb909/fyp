@@ -1,0 +1,101 @@
+{%extends 'base.html'%}
+{%load static%}
+
+{%block content%}
+
+<!-- Page info -->
+<div class="page-top-info" style="height:10px">
+    <div class="container">
+        <h4>CAtegory PAge</h4>
+        <div class="site-pagination">
+            <a href="/">Home</a> /
+            <p style="display:inline-block">{{cats.category_title}}</p>
+        </div>
+    </div>
+</div>
+<!-- Category section -->
+<section class="category-section spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3 order-2 order-lg-1">
+                <div class="filter-widget">
+                    <h2 class="fw-title">Categories</h2>
+                    <ul class="category-menu">
+                        {%for i in categories%}
+                        <li><a href="{%url 'category' i.id%}" style="font-size:14pt">{{i.category_title}}</a>
+                            <ul class="sub-menu">
+                                {%for j in i.subcategory.all%}
+                                <li><a href="{% url 'subcategory' j.id%}" style="font-size:12pt">{{j.title}}</a></li>
+                                {%endfor%}
+                            </ul>
+                        </li>
+                        {%endfor%}
+
+                    </ul>
+                </div>
+            </div>
+            <div class="col-lg-9  order-1 order-lg-2 mb-5 mb-lg-0">
+                <div class="row">
+                    {%if pro%}
+                    {%for i in pro %}
+                    <div class="col-lg-4 col-sm-6">
+                        <div class="product-item">
+                            <div class="pi-pic">
+                                <div class="tag-sale">{{i.tag}}</div>
+                                <a href="{%url 'detail' i.id%}">
+                                <img src="{{i.default_img.url}}" alt="" height="300px" width="250px"> </a>
+                                <div class="pi-links">
+                                    <a href="{%url 'detail' i.id%}" class="add-card"><i
+                                            class="flaticon-bag"></i><span>ADD TO CART</span></a>
+                                    <a href="{%url 'detail' i.id%}" class="wishlist-btn mr-3"><i class="flaticon-search"></i></a>
+                                </div>
+                            </div>
+                            <div class="pi-text">
+                               <h6>{{i.default_price}}</h6>
+						<p>{{i.title}}</p>
+                            </div>
+                        </div>
+                    </div>
+                    {%endfor%}
+                    {%else%}
+                    <div style="text-align: center">
+                        <h3>
+                            There is no item available !
+                        </h3>
+                    </div>
+                    {%endif%}
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Category section end -->
+
+<nav aria-label="page navigation example" class="d-flex justify-content-center">
+    <ul class="pagination pagination-custom">
+        <li class="page-item">
+            {% if pro.has_previous %}
+            <a class="page-link" href="?page={{pro.previous_page_number}}">Previous</a>
+            {% endif %}
+        </li>
+        {% for i in pro.paginator.page_range %}
+        {% if pro.number == i %}
+        <li class="page-item active">
+            <a class="page-link"> <span>{{ i }} <span class="sr-only">(current)</span></span></a>
+        </li>
+        {% else %}
+        <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+        {% endif %}
+        {% endfor %}
+
+        <li class="page-item">
+            {% if pro.has_next %}
+            <a class="page-link" href="?page={{pro.next_page_number}}">Next</a>
+            {% endif %}
+        </li>
+    </ul>
+</nav>
+
+<!-- Page info end -->
+{%endblock%}

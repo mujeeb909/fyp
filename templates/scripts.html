@@ -1,0 +1,157 @@
+{%load static%}
+ <!--====== Javascripts & Jquery ======-->
+	 <script src="https://js.stripe.com/v3/"></script>
+	<script src="{%static 'js/jquery-3.2.1.min.js' %}"></script>
+	<script src="{%static 'js/bootstrap.min.js' %}"></script>
+	<script src="{%static 'js/jquery.slicknav.min.js' %}"></script>
+	<script src="{%static 'js/owl.carousel.min.js' %}"></script>
+	<script src="{%static 'js/jquery.nicescroll.min.js' %}"></script>
+	<script src="{%static 'js/jquery.zoom.min.js' %}"></script>
+	<script src="{%static 'js/jquery-ui.min.js' %}"></script>
+	<script src="{%static 'js/main.js' %}"></script>
+
+<script>
+  $(function() {
+    $("#q").autocomplete({
+      source: "/api/get_places/",
+      select: function (event, ui) { //item selected
+        AutoCompleteSelectHandler(event, ui)
+      },
+      minLength: 2,
+    });
+  });
+
+  function AutoCompleteSelectHandler(event, ui)
+  {
+    var selectedObj = ui.item;
+  }
+
+</script>
+
+
+<script>
+   function toggle(hideable_billing_form, obj) {
+    $(hideable_billing_form).toggle( !obj.checked )
+}
+
+</script>
+
+ <script>
+$(document).ready(function(){
+     var e = document.getElementById("size");
+    var c = document.getElementById("color");
+
+    if (e){
+    var e_value = e.options[e.selectedIndex].text;
+    }
+    else
+     var e_value = "None"
+     if (c){
+    var c_value = c.options[c.selectedIndex].text;
+    }
+    else
+     var c_value = "None"
+
+      $.ajax({
+        url: '/reload/{{item.id}}',
+        data: {
+          'e_value': e_value,
+          'c_value': c_value
+        },
+        dataType: 'json',
+        success: function (data) {
+         console.log(data)
+         if (data.final === 0){
+            $("#cartbtn").css("display","none")
+          }
+          else {
+            $("#cartbtn").css("display","block")
+          }
+        }
+      });
+}).change();
+  </script>
+
+ <script>
+$("#size").change(function () {
+     var e = document.getElementById("size");
+    var c = document.getElementById("color");
+
+    if (e){
+    var e_value = e.options[e.selectedIndex].text;
+    }
+    else
+     var e_value = "None"
+     if (c){
+    var c_value = c.options[c.selectedIndex].text;
+    }
+    else
+     var c_value = "None"
+      $.ajax({
+        url: '/size/{{item.id}}',
+        data: {
+          'e_value': e_value,
+          'c_value': c_value
+        },
+        dataType: 'json',
+        success: function (data) {
+         console.log(data)
+          if (data.sizefinal === 0){
+            $("#cartbtn").css("display","none")
+          }
+          else {
+            $("#cartbtn").css("display","block")
+          }
+
+        }
+      });
+})
+  </script>
+
+ <script>
+$("#color").change(function () {
+     var e = document.getElementById("size");
+    var c = document.getElementById("color");
+
+    if (e){
+    var e_value = e.options[e.selectedIndex].text;
+    }
+    else
+     var e_value = "None"
+     if (c){
+    var c_value = c.options[c.selectedIndex].text;
+    }
+    else
+     var c_value = "None"
+      $.ajax({
+        url: '/color/{{item.id}}',
+        data: {
+          'e_value': e_value,
+          'c_value': c_value
+        },
+        dataType: 'json',
+        success: function (data) {
+         console.log(data)
+          if (data.colorfinal === 0){
+             $("#cartbtn").css("display","none")
+          }
+          else {
+             $("#cartbtn").css("display","block")
+          }
+
+        }
+      });
+})
+  </script>
+
+
+
+{% if messages %}
+  <script>
+      {% for message in messages %}
+          $(document).ready(function () {
+              $('.toast').toast('show');
+          });
+      {% endfor %}
+  </script>
+{% endif %}

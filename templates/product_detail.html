@@ -1,0 +1,194 @@
+{%extends 'base.html'%}
+{%load static%}
+
+{%block content%}
+  <section class="product-section" style="margin-top:10px; padding-top:20px">
+    <div class="container">
+      <div class="back-link">
+        <a href="{%url 'store'%}"> &lt;&lt; Back to Store</a>
+      </div>
+
+      <div class="row">
+        <div class="col-lg-6">
+          <div class="product-pic-zoom">
+            <img class="product-big-img" src="{{item.default_img.url}}" alt="" width="430px" height="450px">
+          </div>
+          <div class="product-thumbs" tabindex="1" style="overflow: hidden; outline: none;">
+            <div class="product-thumbs-track">
+
+              <div class="pt active" data-imgbigurl="{{item.default_img.url}}"><img src="{{item.default_img.url}}" alt=""></div>
+
+                {%for i in images%}
+              <div class="pt" data-imgbigurl="{{i.image.url}}"><img src="{{i.image.url}}" alt=""></div>
+                     {%endfor%}
+            </div>
+          </div>
+        </div>
+
+
+        <div class="col-lg-6 product-details">
+          <h2 class="p-title" style="font-weight:bold; font-size:16pt">{{item.title}}</h2>
+          <h3 class="p-price">{{item.default_price|floatformat}}</h3>
+            {%for i in  st%}
+                {%if i.quantity > 0%}
+          <h4 class="p-stock" style="font-weight:bold; font-size:10pt">Available: <span> ( {%if i.product_Color%}{{i.product_Color}}{%endif%}  | {%if i.product_Size%}{{i.product_Size}}{%endif%} ) Available</span></h4>
+            {%else%}
+        <h4 class="p-stock">Not Available: <span>({{i.product_Color}} | {{i.product_Size}}) Out Of Stock</span></h4>
+                {%endif%}
+            {%empty%}
+            <h4 class="p-stock" style="font-weight:bold; font-size:14pt">Out Of Stock</h4>
+            {%endfor%}
+
+            <div class="p-rating">
+            <i class="fa fa-star-o"></i>
+            <i class="fa fa-star-o"></i>
+            <i class="fa fa-star-o"></i>
+            <i class="fa fa-star-o"></i>
+            <i class="fa fa-star-o fa-fade"></i>
+          </div>
+
+          <div class="p-review">
+            <a href="" style="font-weight:bold; font-size:12pt">{% if revlength %} {{ revlength }} reviews {%else%} No reviews {%endif%}</a>
+          </div>
+
+            <form id="jsform" method="POST" action="{% url 'add-to-cart' item.id %}">
+                {%csrf_token%}
+                 {%if item.product_size.all %}
+          <div class="fw-size-choose">
+            <p>Size</p>
+            <div class="sc-item">
+            <select class="form-control" id="size" name="size">
+              {%for i in  item.product_size.all  %}
+              <option value="{{i.title|lower}}" title="size" selected>{{i.title|capfirst}}</option>
+              {%endfor%}
+            </select>
+            </div>
+          </div>
+ {%endif%}
+          {%if item.product_color.all %}
+          <div class="fw-size-choose">
+            <p>Color</p>
+            <div class="sc-item">
+            <select class="form-control " name="color" id="color">
+              {%for i in  item.product_color.all  %}
+              <option value="{{i.title|lower}}" title="color" selected>{{i.title|capfirst}}</option>
+              {%endfor%}
+            </select>
+            </div>
+          </div>
+ {%endif%}
+          <input type="submit" value="Add to Cart" class="site-btn" id="cartbtn" />
+            </form>
+
+
+            <div id="accordion" class="accordion-area">
+            <div class="panel">
+              <div class="panel-header" id="headingOne">
+                <button class="panel-link active" data-toggle="collapse" data-target="#collapse1" aria-expanded="true" aria-controls="collapse1">information</button>
+              </div>
+              <div id="collapse1" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+                <div class="panel-body">
+                  <p> {{item.description}}</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="panel">
+              <div class="panel-header" id="headingThree">
+                <button class="panel-link" data-toggle="collapse" data-target="#collapse3" aria-expanded="false" aria-controls="collapse3">shipping & Returns</button>
+              </div>
+              <div id="collapse3" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
+                <div class="panel-body">
+                  <h4>7 Days Returns</h4>
+                  <p>Cash on Delivery Available<br>Home Delivery <span>3 - 4 days</span></p>
+                </div>
+              </div>
+            </div>
+
+        </div>
+      </div>
+    </div>
+    </div>
+
+      <div class="container mt-5">
+           <h4>Verified Reviews</h4>
+           <div class="row mt-2">
+                         {%for i in rev%}
+                <div class="col-md-5 col-sm-5 mt-2 mb-2 ml-4" style="background-color:#28282817; border-radius:10px;">
+                   <h6 class="mt-2">{{i.user}}</h6>
+                    {% for i in "x"|ljust:i.rating %}
+                      <i class="fa fa-star" id="star1" style="color:#faca51"></i>
+                      {% endfor %}
+                    <p class="text-muted text-small">{{i.review}}.</p>
+                    <p class="text-right">{{i.timestamp}}.</p>
+                </div>
+               <div style="border:1px solid #f51167;" class="ml-2 mr-2">
+
+               </div>
+               {%endfor%}
+            </div>
+
+<nav aria-label="page navigation example" class="d-flex justify-content-center mt-3 mb-4">
+    <ul class="pagination pagination-custom">
+        <li class="page-item">
+            {% if rev.has_previous %}
+            <a class="page-link" href="?page={{rev.previous_page_number}}">Previous</a>
+            {% endif %}
+        </li>
+        {% for i in rev.paginator.page_range %}
+        {% if rev.number == i %}
+        <li class="page-item active">
+            <a class="page-link"> <span>{{ i }} <span class="sr-only">(current)</span></span></a>
+        </li>
+        {% else %}
+        <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+        {% endif %}
+        {% endfor %}
+
+        <li class="page-item">
+            {% if rev.has_next %}
+            <a class="page-link" href="?page={{rev.next_page_number}}">Next</a>
+            {% endif %}
+        </li>
+    </ul>
+
+</nav>
+              </div>
+
+
+          <section class="top-letest-product-section">
+		<div class="container">
+			<div class="section-title">
+				<h2>Recommendations</h2>
+			</div>
+
+			<div class="product-slider owl-carousel">
+                {%for i in data%}
+                {%if i.Category == item.Category%}
+				<div class="product-item">
+					<div class="pi-pic">
+						<div class="tag-new">{{i.tag}}</div>
+						<a href="{%url 'detail' i.id%}">
+						<img src="{{i.default_img.url}}" alt="" height="300px" width="250px"></a>
+						<div class="pi-links">
+							<a href="{%url 'detail' i.id%}" class="add-card"><i class="flaticon-bag"></i><span>ADD TO CART</span></a>
+							<a href="{%url 'detail' i.id%}" class="wishlist-btn"><i class="flaticon-search"></i></a>
+						</div>
+					</div>
+					<div class="pi-text">
+						<h6>{{i.default_price}}</h6>
+						<p>{{i.title}}</p>
+					</div>
+				</div>
+                {%endif%}
+                {%endfor%}
+
+			</div>
+		</div>
+	</section>
+	<!-- letest product section end -->
+
+
+  </section>
+
+{%endblock%}

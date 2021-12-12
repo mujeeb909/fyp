@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+
+{% include "head.html" %}
+
+<body>
+
+{%include 'header.html'%}
+{% include 'message.html' %}
+
+{%block content%}
+
+{%endblock%}
+
+
+{% include 'scripts.html' %}
+{% block extra_scripts %}
+    {% endblock extra_scripts %}
+{%include 'footer.html'%}
+
+</body>
+
+</html>

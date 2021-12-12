@@ -1,0 +1,147 @@
+{%extends 'base.html'%}
+{%load static%}
+
+{%block content%}
+<!--	<div id="preloder">-->
+<!--		<div class="loader"></div>-->
+<!--	</div>-->
+
+
+	<!-- Hero section -->
+	<section class="hero-section">
+		<div class="hero-slider owl-carousel">
+{%for i in banner%}
+			<div class="hs-item set-bg" data-setbg="{{i.image.url}}">
+				<div class="container">
+					<div class="row">
+						<!--<div class="col-xl-6 col-lg-7 text-white">
+							<span>New Arrivals</span>
+							<h2>{{i.title}}</h2>
+							<p>{{i.description}} </p>
+						</div>
+					-->					</div>
+					<!--<div class="offer-card text-white">
+						<span>upto</span>
+						<h2>90%</h2>
+						<p>sale</p>
+					</div>
+				-->
+				</div>
+			</div>
+			 {%endfor%}
+
+
+		</div>
+		<div class="container">
+			<div class="slide-num-holder" id="snh-1"></div>
+		</div>
+	</section>
+	<!-- Hero section end -->
+
+
+<section class="top-letest-product-section">
+		<div class="container">
+			<div class="section-title">
+				<h2>LATEST PRODUCTS</h2>
+			</div>
+
+			<div class="product-slider owl-carousel">
+                {%for i in items%}
+				<div class="product-item">
+					<div class="pi-pic">
+						<div class="tag-new">{{i.tag}}</div>
+						<a href="{%url 'detail' i.id%}">
+						<img src="{{i.default_img.url}}" alt="" height="300px" width="250px"></a>
+						<div class="pi-links">
+							<a href="{%url 'detail' i.id%}" class="add-card"><i class="flaticon-bag"></i><span>ADD TO CART</span></a>
+							<a href="{%url 'detail' i.id%}" class="wishlist-btn"><i class="flaticon-search"></i></a>
+						</div>
+					</div>
+					<div class="pi-text">
+						<h6>Rs.{{i.default_price}}</h6>
+						<p>{{i.title}}</p>
+					</div>
+				</div>
+                {%endfor%}
+
+			</div>
+		</div>
+	</section>
+	<!-- letest product section end -->
+
+
+	<!-- Product filter section -->
+	<section class="product-filter-section">
+		<div class="container">
+			<div class="section-title">
+				<h2>BROWSE TOP Rated PRODUCTS</h2>
+			</div>
+			<ul class="product-filter-menu">
+				{%for i in cat%}
+				<li><a href="{%url 'category' i.id %}">{{i.category_title}}</a></li>
+					{%endfor%}
+			</ul>
+
+			<div class="row">
+				 {%for i in data%}
+				<div class="col-lg-3 col-sm-6">
+				<div class="product-item">
+					<div class="pi-pic">
+						<div class="tag-new">{{i.tag}}</div>
+						<a href="{%url 'detail' i.id%}">
+						<img src="{{i.default_img.url}}" alt="" height="300px" width="250px"></a>
+						<div class="pi-links">
+							<a href="{%url 'detail' i.id%}" class="add-card"><i class="flaticon-bag"></i><span>ADD TO CART</span></a>
+							<a href="{%url 'detail' i.id%}" class="wishlist-btn"><i class="flaticon-search"></i></a>
+						</div>
+					</div>
+					<div class="pi-text">
+						<h6>Rs.{{i.default_price}}</h6>
+						<p>{{i.title}}</p>
+					</div>
+				</div>
+               	</div>
+                {%endfor%}
+
+			</div>
+			<div class="text-center pt-5">
+				<a href="{%url 'store'%}" class="site-btn sb-line sb-dark">LOAD MORE</a>
+			</div>
+		</div>
+	</section>
+	<!-- Product filter section end -->
+<!-- Features section -->
+	<section class="features-section mt-3">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-md-4 p-0 feature">
+					<div class="feature-inner">
+						<div class="feature-icon">
+							<img src="{% static 'img/icons/1.png' %}" alt="#">
+						</div>
+						<h2>Fast Secure Payments</h2>
+					</div>
+				</div>
+				<div class="col-md-4 p-0 feature">
+					<div class="feature-inner">
+						<div class="feature-icon">
+							<img src="{% static 'img/icons/2.png' %}" alt="#">
+						</div>
+						<h2>Premium Products</h2>
+					</div>
+				</div>
+				<div class="col-md-4 p-0 feature">
+					<div class="feature-inner">
+						<div class="feature-icon">
+							<img src="{% static 'img/icons/3.png' %}" alt="#">
+						</div>
+						<h2>Free & fast Delivery</h2>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- Features section end -->
+
+
+{%endblock%}

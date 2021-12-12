@@ -1,0 +1,41 @@
+{%extends 'base.html'%}
+{%load static%}
+
+{%block content%}
+<style>
+    input[type=radio] {
+    width: 20px;
+    height: 20px;
+}
+</style>
+<div class="page-top-info mb-4" style="padding:10px">
+    <div class="container">
+        <h4> PAge</h4>
+        <div class="site-pagination">
+            <a href="/">Home</a> /
+            <p style="display:inline-block">Payment</p>
+        </div>
+    </div>
+</div>
+
+<div class="container mt-5 mb-5">
+    <div class="row mt-5 mb-5">
+        <div class="col-md-12 mt-5 mb-5 text-center">
+            <form method="post">
+                      {% csrf_token %}
+                       <div class="form-group mt-2">
+                        <input type="radio" name="default" id="default" class="form-check-input mr-5">
+                        <label for="default" class="ml-2 text-left">
+                            <strong>Pay on Delivery</strong><br>
+                            <span class="label-description">Pay when after receiving the order..</span>
+                        </label>
+
+                       </div>
+                <button type="submit" class="btn btn-success p-2" style="width:30%"> Confirm Order <i class="fa fa-angle-right"></i>
+                          </button>
+
+                  </form>
+        </div>
+    </div>
+</div>
+{%endblock%}

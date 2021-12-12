@@ -1,0 +1,64 @@
+{%extends 'base.html'%}
+{%load static%}
+{% load crispy_forms_tags %}
+{%block content%}
+
+<div class="container mt-5 mb-5">
+    <div class="row">
+        <div class="col-md-5 mt-5">
+            <h2 class="text-center">
+                Sign Up
+            </h2>
+            <img src="{%static 'signup.png' %}" class=" img-fluid">
+            <h5 class="text-center mt-5"><a href="{%url 'login'%}" class="btn btn-success"> Already have Account </a></h5>
+
+
+        </div>
+        <div class="col-lg-7 col-md-7 mt-3 mb-3">
+            <div class="block">
+                <h4 class="mb-3">New account</h4>
+                <form method="post" data-validate-username-url="{% url 'validate_username' %}">
+                    {% csrf_token %}
+<span id="error"></span>
+                    {{ form|crispy }}
+
+                    {{ f_form|crispy }}
+
+                    <div class="form-group text-center">
+                        <button type="submit" class="btn btn-primary"><i class="icon-profile"></i> Register
+                        </button>
+                    </div>
+                </form>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://code.jquery.com/jquery-2.2.4.js" integrity="sha256-iT6Q9iMJYuQiMWNd9lDyBUStIq/8PuOW33aOqmvFpqI=" crossorigin="anonymous"></script>
+
+<script>
+    $("#id_username").change(function () {
+      var username = $(this).val();
+
+      $.ajax({
+        url: '{% url "validate_username" %}',
+        data: {
+          'username': username
+        },
+        dataType: 'json',
+        success: function (data) {
+          if (data.is_taken) {
+              $("#error").show();
+    $('#error').addClass('red').html("UserName already exits!");
+        $("#error").fadeOut(3000);
+
+        } else {
+            error.innerHTML = ""
+        }
+        }
+      });
+    });
+  </script>
+
+{%endblock%}
