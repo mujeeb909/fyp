@@ -167,7 +167,8 @@ button:hover {
 {% endblock %}
 {% block extra_scripts %}
 
-<script nonce="">  // Create a Stripe client.
+<script nonce="">
+  //Create a Stripe client.
   var stripe = Stripe('pk_test_51JwLrQLuy5GGiEJfSbIC9gjb9sg02D1dlF7rYd4XZIc2VpMYCsHvoFesTn5EnZ8oofNp9VvvRwkDoOJZWe6TaH230089jAUe1c');
   // Create an instance of Elements.
   var elements = stripe.elements();
