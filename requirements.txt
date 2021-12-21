@@ -24,11 +24,15 @@ scikit-learn==0.23.1
 scipy==1.5.1
 six==1.15.0
 sklearn==0.0
+sonopy==0.1.2
 sqlparse==0.3.1
 stripe==2.48.0
 threadpoolctl==2.1.0
 toml==0.10.1
 Unipath==1.1
 urllib3==1.25.9
+vader==0.0.3
+vaderSentiment==3.3.2
+waitress==2.0.0
 whitenoise==5.1.0
 wincertstore==0.2

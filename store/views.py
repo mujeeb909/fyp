@@ -117,9 +117,8 @@ def contact(request):
             email = form.cleaned_data['Email']
             message = form.cleaned_data['Message']
             subject, from_email, to = subject, email, 'mohammad.mujeeb.051@gmail.com'
-            #darainabbas380@gmail.com
             print(subject)
-            # text_content = message
+
             html_content = '<p>Name: </p>'+ name+ '<p>Email: </p>' + from_email  + '<p>Message: </p>'+ message
             try:
                 send_mail(subject, message,  settings.EMAIL_HOST_USER, ['mohammad.mujeeb.051@gmail.com'], fail_silently=True ,html_message=html_content )

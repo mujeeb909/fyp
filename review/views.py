@@ -26,11 +26,11 @@ def Itemreview(request, id):
             sid_obj = SentimentIntensityAnalyzer()
             sentiment_dict = sid_obj.polarity_scores(review)
             if sentiment_dict['compound'] >= 0.05 :
-	             result = "Positive"
+	             result = "positive"
             elif sentiment_dict['compound'] <= - 0.05 :
-	            result = "Negative"
+	            result = "negative"
             else :
-	            result = "Neutral"
+	            result = "neutral"
            
             rate.review_predict = result
             rate.review = review
