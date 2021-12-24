@@ -26,8 +26,7 @@ urlpatterns = [
     path('', include('store.urls')),
     path('', include('accounts.urls')),
     path('', include('order.urls')),
-    path('', include('review.urls')),
+    path('', include('review.urls'))
 
-    re_path(r'^media/(?<path>.*)$', serve, {'document_root':settings.MEDIA_ROOT})
-
+    
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
